@@ -16,6 +16,20 @@ class BagMain {
      */
     public static void enhanceBags(Bag[] bags, boolean double_enhance_handbags) {
         // TODO: Implement this.
+
+        // Iterate through each bag
+        for (Bag current_bag : bags) {
+
+            // If double_enhance_handbags is true and current_bag is a HandBag, then double-enhance current_bag
+            if (double_enhance_handbags && current_bag instanceof HandBag) {
+                current_bag.enhance();
+                current_bag.enhance();
+
+            // Else, only do 1 enhance call
+            } else {
+                current_bag.enhance();
+            }
+        }
     }
 
     /**
@@ -29,5 +43,20 @@ class BagMain {
      */
     public static int countCrossbodyStraps(Bag[] bags) {
         // TODO: Implement this.
+
+        // Define a variable to count total straps for CrossbodyBags
+        int total_straps = 0;
+
+        // Iterate through each bag
+        for (Bag current_bag : bags) {
+
+            // If the current bag is a CrossbodyBag, then add its number of straps to the count
+            if (current_bag instanceof CrossbodyBag) {
+                total_straps = total_straps + ((CrossbodyBag) current_bag).getNumberOfStraps();
+            }
+        }
+
+        // Return the total number of straps of all CrossbodyBags in bags
+        return total_straps;
     }
 }

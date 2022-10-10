@@ -13,8 +13,10 @@ public abstract class Bag {
      *       - an int named capacity
      *       - an array of Strings named contents
      */
-
-
+    private String color;
+    private int numberOfContents;
+    private int capacity;
+    private String[] contents;
 
 
     /*
@@ -26,8 +28,12 @@ public abstract class Bag {
      * be empty (e.g. numberOfContents is 0 and an empty String array for
      * its contents.)
      */
-
-
+    public Bag(String color, int capacity) {
+        this.color = color;
+        this.capacity = capacity;
+        this.numberOfContents = 0;
+        this.contents = new String[capacity];
+    }
 
 
     /*
@@ -37,8 +43,32 @@ public abstract class Bag {
      *           - getNumberOfContents
      *           - getCapacity
      */
+    /**
+     * Get color of the Bag.
+     *
+     * @return the Bag's color
+     */
+    public String getColor() {
+        return this.color;
+    }
 
+    /**
+     * Get number of contents of the Bag.
+     *
+     * @return the Bag's contents
+     */
+    public int getNumberOfContents() {
+        return this.numberOfContents;
+    }
 
+    /**
+     * Get capacity of the Bag.
+     *
+     * @return the Bag's capacity
+     */
+    public int getCapacity() {
+        return this.capacity;
+    }
 
 
     /*
@@ -46,8 +76,12 @@ public abstract class Bag {
      *       color of this bag to the given color.
      */
 
-
-
+    /**
+     * Set color of Bag to given color.
+     */
+    public void setColor(String given_color) {
+        this.color = given_color;
+    }
 
 
     /*
@@ -60,7 +94,20 @@ public abstract class Bag {
      *       This method should return true if the item was added
      *       and false otherwise.
      */
-
+    public boolean addItem(String item) {
+        /**
+         * Try to add item into the Bag if the number of items
+         * so far is less than the Bag's capacity. Return a
+         * boolean representing the success of doing so.
+         */
+        if (this.numberOfContents < this.capacity) {
+            this.contents[numberOfContents] = item;
+            this.numberOfContents = this.numberOfContents + 1;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
 
@@ -73,11 +120,35 @@ public abstract class Bag {
      *
      * If there are no items in this Bag, return null.
      *
-     * @return
+     * @return null if there are no items in the Bag, or the last item added to the Bag
      */
+    public String popItem() {
+        // If the number of contents is 0, do nothing and return null
+        if (this.numberOfContents == 0) {
+            return null;
 
+        // Else, number of contents is > 0, so pop item
+        } else {
 
+            // Get the last non-null item and update number of contents
+            String last_item = this.contents[this.numberOfContents - 1];
+            this.numberOfContents = this.numberOfContents - 1;
 
+            // Create a new array of the same capacity
+            String[] new_array = new String[this.capacity];
+
+            // Iterate through the array to copy everything except the last item
+            for (int i = 0; i <= this.contents.length - 2; i = i + 1) {
+                new_array[i] = this.contents[i];
+            }
+
+            // Re-assign the array associated with the contents, so the last item is "removed"
+            this.contents = new_array;
+
+            // Return the last item
+            return last_item;
+        }
+    }
 
 
     /**
@@ -88,6 +159,19 @@ public abstract class Bag {
     public void increaseCapacity(int n) {
         // TODO: Implement this method.
 
+        // Create a new array of String objects to represent new contents, as an array has a fixed length
+        String[] new_contents = new String[this.contents.length + n];
+
+        // Loop to copy remaining items of this.contents into new_contents
+        for (int i = 0; i <= this.contents.length - 1; i = i + 1) {
+            new_contents[i] = this.contents[i];
+        }
+
+        // Make the contents attribute refer to new_contents
+        this.contents = new_contents;
+
+        // Update capacity
+        this.capacity = new_contents.length;
     }
 
     /**
